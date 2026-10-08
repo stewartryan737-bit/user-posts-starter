@@ -1,5 +1,5 @@
 const PostListEl = document.querySelector(".post-list");
-const userId = localStorage.getItem("id");
+let userId = localStorage.getItem("id");
 
 async function main() {
   if (!userId) {
@@ -9,7 +9,7 @@ async function main() {
 
   try {
     const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?userId=${encodeURIComponent(userId)}`
+      `https://jsonplaceholder.typicode.com/posts?userId=${encodeURIComponent(userId)}`,
     );
     if (!response.ok) {
       throw new Error(`Failed to load posts (${response.status})`);
@@ -21,7 +21,7 @@ async function main() {
         (post) => `<div class="post">
           <div class="post__title">${post.title}</div>
           <p class="post__body">${post.body}</p>
-        </div>`
+        </div>`,
       )
       .join("");
   } catch (error) {
@@ -31,3 +31,8 @@ async function main() {
 }
 
 main();
+
+function onSearchChange(event) {
+  userId = event.target.value;
+  main();
+}
