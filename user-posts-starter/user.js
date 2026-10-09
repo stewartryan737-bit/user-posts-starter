@@ -1,9 +1,9 @@
-const PostListEl = document.querySelector(".post-list");
+const postListEl = document.querySelector(".post-list");
 let userId = localStorage.getItem("id");
 
 async function main() {
   if (!userId) {
-    PostListEl.textContent = "Select a user to view their posts.";
+    postListEl.textContent = "Select a user to view their posts.";
     return;
   }
 
@@ -16,7 +16,7 @@ async function main() {
     }
 
     const posts = await response.json();
-    PostListEl.innerHTML = posts
+    postListEl.innerHTML = posts
       .map(
         (post) => `<div class="post">
           <div class="post__title">${post.title}</div>
@@ -26,7 +26,7 @@ async function main() {
       .join("");
   } catch (error) {
     console.error("Unable to load user posts:", error);
-    PostListEl.textContent = "Unable to load posts. Please try again.";
+    postListEl.textContent = "Unable to load posts. Please try again.";
   }
 }
 
